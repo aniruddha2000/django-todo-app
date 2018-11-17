@@ -1,0 +1,14 @@
+{% extends 'accounts/base.html' %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="{% url 'accounts:index' %}">TodoGuide</a>
+    <span class="d-block d-lg-inline-block">
+        <div class="HeaderNavlink px-0 py-2 m-0">
+            <a class="text-bold text-white no-underline" href="{% url 'accounts:login' %}" >Sign in</a>
+            <span class="text-gray">or</span>
+            <a class="text-bold text-white no-underline" href="{% url 'accounts:signup' %}">Sign up</a>
+        </div>
+    </span>
+</nav>
+{% endblock %}

@@ -1,8 +1,11 @@
-{% extends 'TodoApp/base.html' %}
+{% extends 'accounts/base.html' %}
 
 {% block content %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="{% url 'accounts:index' %}">TodoGuide</a>
+</nav>
 <div class="container">
-    <form class="form" method="POST">
+    <form class="form" action="{% url 'accounts:signup' %}" method="POST">
         {% csrf_token %}
         <h1>Join FlightX</h1>
         <label>Username:</label>
