@@ -1,4 +1,9 @@
 {% extends 'TodoApp/base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'TodoApp/css/todo.css' %}">
+{% endblock %}
 
 {% block content %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -16,6 +21,7 @@
                 {% for todo in todo_list %}
                 <li>
                     {{ todo.content }}
+                    <button id="delete_button" type="button" class="btn btn-danger btn-sm">Delete</button>
                 </li>
                 {% endfor %}
             </td>
