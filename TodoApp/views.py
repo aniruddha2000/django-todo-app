@@ -25,3 +25,9 @@ def add_todo(request):
 def logout_view(request):
     logout(request)
     return render(request, "TodoApp/todo.html", {"message": "Logged out."})
+
+@login_required(login_url='accounts:login')
+def delete_todo(request, todo_id):
+    todo_delete = TodoList.objects.get(id=todo_id)
+    todo_delete.delete()
+    return HttpResponseRedirect(reverse("TodoApp:todo"))
