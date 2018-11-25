@@ -16,15 +16,14 @@
         <th scope="col">Todos</th>
     </thead>
     <tbody>
-        <tr class="table-success">
+        <tr class="table-light">
             <td>
                 {% for todo in todo_list %}
                 <li>
                     {{ todo.content }}
-                    <!-- <button id="delete_button" type="button" class="btn btn-danger btn-sm">Delete</button> -->
-                    <form action="{% url 'TodoApp:DeleteTodo' todo.id %}" method="POST">
+                    <form id="delete_button" action="{% url 'TodoApp:DeleteTodo' todo.id %}" method="POST">
                         {% csrf_token %}
-                        <input id="delete_button" type="submit" value="Delete" class="btn btn-danger btn-sm">
+                        <input type="submit" value="&#10006;" class="btn btn-outline-danger btn-sm">
                     </form>
                 </li>
                 {% endfor %}
