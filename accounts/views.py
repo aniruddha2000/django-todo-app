@@ -40,3 +40,20 @@ def signup_view(request):
         'form': form,
     }
     return render(request, "accounts/signup.html", context)
+
+def update_password_view(request):
+    next = request.GET.get('next')
+    form = UpdatePassword(request.POST or None)
+    if form.is_valid():
+        user = form.save(commit=False)
+        password = form.cleaned_data.get('new_password1')
+        user.set_password(password)
+        user.save()
+        if next:
+            return redirect(next)
+        return redirect('TodoApp:todo')
+
+    context = {
+        'form': form,
+    }
+    return render(request, "accounts/update_pass.html", context)

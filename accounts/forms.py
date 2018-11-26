@@ -98,3 +98,69 @@ class UserRegisterForm(forms.ModelForm):
         if password1 != password2:
             raise forms.ValidationError("Password must match")
         return super(UserRegisterForm, self).clean(*args, **kwargs)
+
+
+class UpdatePassword(forms.ModelForm):
+    username = forms.CharField(label='', widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter username...',
+            'style': 'border-radius: 4px;',
+        }
+    ), )
+
+    old_password = forms.CharField(label='', widget=forms.PasswordInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter password...',
+            'style': 'border-radius: 4px;',
+        }
+    ), )
+
+    new_password1 = forms.CharField(label='', widget=forms.PasswordInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter password...',
+            'style': 'border-radius: 4px;',
+        }
+    ), )
+
+    new_password2 = forms.CharField(label='', widget=forms.PasswordInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter password...',
+            'style': 'border-radius: 4px;',
+        }
+    ), )
+
+    class Meta:
+        model = User
+        fields = [
+            'username',
+            'old_password',
+            'new_password1',
+            'new_password2',
+        ]
+
+    def clean(self, *args, **kwargs):
+        cleaned_data = super().clean()
+        username = cleaned_data.get('username')
+        old_password = cleaned_data.get('old_password')
+        new_password1 = cleaned_data.get('new_password1')
+        new_password2 = cleaned_data.get('new_password2')
+
+        if username and old_password:
+            user = authenticate(username=username, password=old_password)
+            if not user:
+                raise forms.ValidationError(
+                    'Please check your username and password'
+                )
+            elif old_password == new_password1:
+                raise forms.ValidationError(
+                    'Old and new password is same'
+                )
+            elif new_password1 != new_password2:
+                raise forms.ValidationError(
+                    'Password not match'
+                )
+        return super(UserRegisterForm, self).clean(*args, **kwargs)

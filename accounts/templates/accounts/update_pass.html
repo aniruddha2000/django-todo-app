@@ -1,0 +1,18 @@
+{% extends 'accounts/base.html' %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="{% url 'accounts:index' %}">TodoGuide</a>
+</nav>
+<div class="container">
+    <form class="form" action="{% url 'accounts:signup' %}" method="POST">
+        {% csrf_token %}
+        <h1>Join TodoGuide</h1>
+        <label>Username:</label>
+        {{ form.username }}
+        
+        <br>
+        <button class="btn btn-primary btn-block">Submit</button>
+    </form>
+</div>
+{% endblock %}
