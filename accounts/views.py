@@ -43,7 +43,7 @@ def signup_view(request):
 
 def update_password_view(request):
     next = request.GET.get('next')
-    form = UpdatePassword(request.POST or None)
+    form = UpdatePassword(data=request.POST or None)
     if form.is_valid():
         user = form.save(commit=False)
         password = form.cleaned_data.get('new_password1')

@@ -8,15 +8,7 @@
 {% block content %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="{% url 'TodoApp:todo' %}">TodoGuide</a>
-    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-        <button type="button" class="btn btn-success">&#x2699;</button>
-        <div class="btn-group" role="group">
-          <button id="btnGroupDrop2" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-          <div class="dropdown-menu" aria-labelledby="btnGroupDrop2">
-            <a class="dropdown-item" href="{% url 'accounts:pass_update' %}">Change Password</a>
-          </div>
-        </div>
-    </div>
+    <a class="navbar-brand" href="{% url 'accounts:pass_update' %}">Channge Password</a>
     <a class="navbar-brand" href="{% url 'accounts:login' %}">Logout</a>
 </nav>
 <div class="container">

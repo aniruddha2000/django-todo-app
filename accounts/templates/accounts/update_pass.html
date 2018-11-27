@@ -2,15 +2,18 @@
 
 {% block content %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="{% url 'accounts:index' %}">TodoGuide</a>
+    <a class="navbar-brand" href="{% url 'TodoApp:todo' %}">TodoGuide</a>
 </nav>
 <div class="container">
-    <form class="form" action="{% url 'accounts:signup' %}" method="POST">
+    <form class="form" action="{% url 'accounts:pass_update' %}" method="POST">
         {% csrf_token %}
-        <h1>Join TodoGuide</h1>
-        <label>Username:</label>
-        {{ form.username }}
-        
+        <h1>Change Password</h1>
+        <label>Old Password:</label>
+        {{ form.old_password }}
+        <label>New Password:</label>
+        {{ form.new_password1 }}
+        <label>Re-Enter New Password:</label>
+        {{ form.new_password2 }}
         <br>
         <button class="btn btn-primary btn-block">Submit</button>
     </form>
