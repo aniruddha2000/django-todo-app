@@ -43,12 +43,9 @@ def signup_view(request):
 
 def update_password_view(request):
     next = request.GET.get('next')
-    form = UpdatePassword(data=request.POST or None)
+    form = ChangePasswordForm(data=request.POST, user=request.user)
     if form.is_valid():
-        user = form.save(commit=False)
-        password = form.cleaned_data.get('new_password1')
-        user.set_password(password)
-        user.save()
+        form.save()
         if next:
             return redirect(next)
         return redirect('TodoApp:todo')

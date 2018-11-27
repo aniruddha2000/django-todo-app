@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth import authenticate, get_user_model
+from django.contrib.auth.forms import PasswordChangeForm
 
 User = get_user_model()
 
@@ -100,7 +101,15 @@ class UserRegisterForm(forms.ModelForm):
         return super(UserRegisterForm, self).clean(*args, **kwargs)
 
 
-class UpdatePassword(forms.ModelForm):
+class ChangePasswordForm(PasswordChangeForm):
+    old_password = forms.CharField(label='', widget=forms.PasswordInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter password...',
+            'style': 'border-radius: 4px;',
+        }
+    ), )
+
     new_password1 = forms.CharField(label='', widget=forms.PasswordInput(
         attrs={
             'class': 'form-control',
@@ -120,12 +129,14 @@ class UpdatePassword(forms.ModelForm):
     class Meta:
         model = User
         fields = [
+            'old_password',
             'new_password1',
             'new_password2',
         ]
 
     def clean(self, *args, **kwargs):
         cleaned_data = super().clean()
+        old_password = cleaned_data.get('old_password')
         new_password1 = cleaned_data.get('new_password1')
         new_password2 = cleaned_data.get('new_password2')
         
@@ -133,4 +144,4 @@ class UpdatePassword(forms.ModelForm):
                 raise forms.ValidationError(
                     'Password not match'
                 )
-        return super(UpdatePassword, self).clean(*args, **kwargs)
+        return super(ChangePasswordForm, self).clean(*args, **kwargs)
