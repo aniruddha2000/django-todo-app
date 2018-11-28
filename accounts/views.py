@@ -1,9 +1,7 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
-from django.urls import reverse
-from .models import *
+from django.conf import settings
 from .forms import *
 
 def index_view(request):
@@ -54,3 +52,8 @@ def update_password_view(request):
         'form': form,
     }
     return render(request, "accounts/update_pass.html", context)
+
+@login_required(login_url='accounts:login')
+def logout_view(request):
+    logout(request)
+    return redirect('accounts:login')
