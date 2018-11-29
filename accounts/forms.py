@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth import authenticate, get_user_model
-from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.forms import (
+    PasswordChangeForm, UserCreationForm
+)
 
 User = get_user_model()
 
@@ -38,7 +40,7 @@ class UserLoginForm(forms.Form):
                 raise forms.ValidationError(
                     'Oh! That user is not active in the database!')
 
-class UserRegisterForm(forms.ModelForm):
+class UserRegisterForm(UserCreationForm):
     username = forms.CharField(label='', widget=forms.TextInput(
         attrs={
             'class': 'form-control',
@@ -46,17 +48,24 @@ class UserRegisterForm(forms.ModelForm):
             'style': 'border-radius: 4px;',
         }
     ), )
+    first_name = forms.CharField(label='', required=False, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter first name...',
+            'style': 'border-radius: 4px;',
+        }
+    ), )
+    last_name = forms.CharField(label='', required=False, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter last name...',
+            'style': 'border-radius: 4px;',
+        }
+    ), )
     email = forms.EmailField(label='', widget=forms.TextInput(
         attrs={
             'class': 'form-control',
             'placeholder': 'Enter email...',
-            'style': 'border-radius: 4px;',
-        }
-    ),)
-    email2 = forms.EmailField(label='', widget=forms.TextInput(
-        attrs={
-            'class': 'form-control',
-            'placeholder': 'Confirm email...',
             'style': 'border-radius: 4px;',
         }
     ),)
@@ -79,19 +88,17 @@ class UserRegisterForm(forms.ModelForm):
         model = User
         fields = [
             'username',
+            'first_name',
+            'last_name',
             'email',
-            'email2',
             'password1',
             'password2',
         ]
 
     def clean(self, *args, **kwargs):
         email = self.cleaned_data.get('email')
-        email2 = self.cleaned_data.get('email2')
         password1 = self.cleaned_data.get('password1')
         password2 = self.cleaned_data.get('password2')
-        if email != email2:
-            raise forms.ValidationError("Emails must match")
         email_qs = User.objects.filter(email=email)
         if email_qs.exists():
             raise forms.ValidationError(

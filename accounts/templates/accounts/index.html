@@ -1,14 +1,26 @@
 {% extends 'accounts/base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'accounts/css/index.css' %}">
+{% endblock %}
 
 {% block content %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="{% url 'accounts:index' %}">TodoGuide</a>
-    <span class="d-block d-lg-inline-block">
-        <div class="HeaderNavlink px-0 py-2 m-0">
-            <a class="text-bold text-white no-underline" href="{% url 'accounts:login' %}" >Sign in</a>
-            <span class="text-gray">or</span>
-            <a class="text-bold text-white no-underline" href="{% url 'accounts:signup' %}">Sign up</a>
+    <div class="container-fluid">
+        <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'accounts:index' %}">TodoGuide</a>
         </div>
-    </span>
+        <span class="d-block d-lg-inline-block">
+            <div class="HeaderNavlink px-0 py-2 m-0">
+                <a class="text-bold text-white no-underline" href="{% url 'accounts:login' %}" >Sign in</a>
+                <span class="text-gray">or</span>
+                <a class="text-bold text-white no-underline" href="{% url 'accounts:signup' %}">Sign up</a>
+            </div>
+        </span>
+    </div>
 </nav>
+<div class="bg_img">
+    <img src="{% static 'accounts/images/todo.jpg' %}" alt="">
+</div>
 {% endblock %}
