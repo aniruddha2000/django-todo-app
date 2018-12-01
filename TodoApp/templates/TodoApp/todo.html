@@ -31,6 +31,10 @@
                 {% for todo in todo_list %}
                 <li>
                     {{ todo.content }}
+                    <form id="delete_button" action="{% url 'TodoApp:EditTodo' todo.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="submit" name="content" value="&#xe22b;" class="btn btn-outline-danger btn-sm">
+                    </form>
                     <form id="delete_button" action="{% url 'TodoApp:DeleteTodo' todo.id %}" method="POST">
                         {% csrf_token %}
                         <input type="submit" value="&#10006;" class="btn btn-outline-danger btn-sm">

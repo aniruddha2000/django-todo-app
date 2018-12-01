@@ -1,10 +1,17 @@
 {% extends 'accounts/base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static '' %}">
+{% endblock %}
 
 {% block content %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="{% url 'accounts:index' %}">TodoGuide</a>
 </nav>
+
 <div class="container">
+    <!-- <img id="bg-img" src="{% static 'accounts/images/todo1.jpg' %}"> -->
     <form class="form" action="{% url 'accounts:login' %}" method="POST">
         {% csrf_token %}
             <h1>Sign in to TodoGuide</h1>
