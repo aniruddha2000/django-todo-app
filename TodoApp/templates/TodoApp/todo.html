@@ -47,9 +47,9 @@
 </table>
 </div>
 <div class="container">
-    <form action="{% url 'TodoApp:AddTodo' %}" method="post">
+    <form method="post">
         {% csrf_token %}
-        <input class="form-control" type="text" name="content" placeholder="Enter your Todos">
+        {{ form.todo }}
         <br>
         <button class="btn btn-primary btn-block">Add</button>
     </form>

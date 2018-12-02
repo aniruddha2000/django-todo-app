@@ -1,29 +1,40 @@
-from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from .models import *
+from .forms import *
 
+
+# @login_required(login_url='accounts:login')
+# def todo_view(request):
+#     """
+#         This function for showing all todos
+#     """
+#     context = {
+#         'todo_list': TodoList.objects.filter(user=request.user),
+#     }
+
+#     return render(request, "TodoApp/todo.html", context)
 
 @login_required(login_url='accounts:login')
 def todo_view(request):
     """
-        This function for showing all todos
-    """
-    context = {
-        'todo_list': TodoList.objects.filter(user=request.user),
-    }
-
-    return render(request, "TodoApp/todo.html", context)
-
-@login_required(login_url='accounts:login')
-def add_todo(request):
-    """
         This function for adding todo 
     """
-    new_item = TodoList(content=request.POST.get('content'), user=request.user)
-    new_item.save()
-    return HttpResponseRedirect(reverse("TodoApp:todo"))
+    # new_item = TodoList(content=request.POST.get('content'), user=request.user)
+    # new_item.save()
+    # return HttpResponseRedirect(reverse("TodoApp:todo"))
+    form = TodoForm(request.POST or None)
+    if form.is_valid():
+        new_todo = TodoList(content=form.cleaned_data.get('todo'), user=request.user)
+        new_todo.save()
+        return redirect('TodoApp:todo')
+
+    context = {
+        'form': form,
+        'todo_list': TodoList.objects.filter(user=request.user),
+    }
+    return render(request, "TodoApp/todo.html", context)
 
 @login_required(login_url='accounts:login')
 def delete_todo(request, todo_id):
@@ -32,7 +43,7 @@ def delete_todo(request, todo_id):
     """
     todo_delete = TodoList.objects.get(id=todo_id)
     todo_delete.delete()
-    return HttpResponseRedirect(reverse("TodoApp:todo"))
+    return redirect("TodoApp:todo")
 
 @login_required(login_url='accounts:login')
 def edit_todo(request, todo_id):
