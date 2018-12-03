@@ -19,13 +19,12 @@
     </div>
 </nav>
 <div class="container">
-    <form action="">
-        <form action="{% url 'TodoApp:EditTodo' %}" method="post">
-            {% csrf_token %}
-            <input class="form-control" type="text" name="content" placeholder="Edit your Todos">
-            <br>
-            <button class="btn btn-primary btn-block">Confirm</button>
-        </form>
+    <form method="POST">
+        {% csrf_token %}
+        <br>
+        {{ form.todo }}
+        <br>
+        <button class="btn btn-primary btn-block">Update</button>
     </form>
 </div>
 {% endblock %}
