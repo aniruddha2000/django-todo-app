@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.conf import settings
 from .forms import *
 
 def index_view(request):
@@ -40,13 +39,12 @@ def signup_view(request):
     return render(request, "accounts/signup.html", context)
 
 def update_password_view(request):
-    next = request.GET.get('next')
     form = ChangePasswordForm(data=request.POST, user=request.user)
-    if form.is_valid():
-        form.save()
-        if next:
-            return redirect(next)
-        return redirect('TodoApp:todo')
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            return redirect('TodoApp:todo')
 
     context = {
         'form': form,
