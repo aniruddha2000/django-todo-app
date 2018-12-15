@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from .forms import *
 
 def index_view(request):
@@ -44,7 +45,10 @@ def update_password_view(request):
         if form.is_valid():
             form.save()
             update_session_auth_hash(request, form.user)
+            messages.success(request, 'Your password has been updated')
             return redirect('TodoApp:todo')
+        else:
+            messages.error(request, 'Please correct the error')
 
     context = {
         'form': form,

@@ -1,4 +1,9 @@
 {% extends 'accounts/base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'accounts/css/update_pass.css' %}">
+{% endblock %}
 
 {% block content %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -17,5 +22,11 @@
         <br>
         <button class="btn btn-primary btn-block">Submit</button>
     </form>
+    <div id="message">
+        <h3>Password must contain the following:</h3>
+        <p>Must contain a <b>number</b></p>
+        <p>Minimum <b>8 characters</b></p>
+        <p>Can't be totally <b>numeric</b></p>
+    </div>
 </div>
 {% endblock %}

@@ -1,0 +1,10 @@
+#message {
+    background: rgb(196, 201, 200);
+    color: #000;
+    position: relative;
+    padding: 20px;
+    margin-top: 10px;
+  }
+#message p {
+    color: rgb(233, 12, 12)
+}
