@@ -1,6 +1,8 @@
 {% extends 'TodoApp/base.html' %}
 {% load static %}
 
+{% block title %}{{ item.content }}{% endblock %}
+
 {% block css %}
     
 {% endblock %}
@@ -22,6 +24,7 @@
     <form method="POST">
         {% csrf_token %}
         <br>
+        <h2>{{ item.content }}</h2>
         {{ form.todo }}
         <br>
         <button class="btn btn-primary btn-block">Update</button>
